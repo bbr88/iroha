@@ -4,7 +4,7 @@
   "internal_port" : 10001,
   "pg_opt" : "host=localhost port=5433 user=postgres password=mysecretpassword",
   "max_proposal_size" : 10,
-  "proposal_delay" : 5000,
+  "proposal_delay" :100,
   "vote_delay" : 5000,
   "load_delay" : 5000,
   "mst_enable" : false

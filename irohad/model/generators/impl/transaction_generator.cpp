@@ -54,33 +54,40 @@ namespace iroha {
             command_generator.generateCreateAdminRole("admin"));
         // Create user role
         tx.commands.push_back(command_generator.generateCreateUserRole("user"));
-        tx.commands.push_back(
-            command_generator.generateCreateAssetCreatorRole("money_creator"));
+        // Create money_creator role
+        tx.commands.push_back(command_generator.generateCreateAssetCreatorRole("money_creator"));
+
         // Add domain
         tx.commands.push_back(
-            command_generator.generateCreateDomain("test", "user"));
+            command_generator.generateCreateDomain("nbc", "user"));
+
         // Create asset
         auto precision = 2;
         tx.commands.push_back(
-            command_generator.generateCreateAsset("coin", "test", precision));
+            command_generator.generateCreateAsset("khr", "nbc", precision));
+        tx.commands.push_back(
+            command_generator.generateCreateAsset("usd", "nbc", precision));
+
         // Create accounts
-        KeysManagerImpl manager("admin@test");
+        KeysManagerImpl manager("admin@nbc");
         manager.createKeys();
         auto keypair = *std::unique_ptr<iroha::keypair_t>(
             makeOldModel(*manager.loadKeys()));
         tx.commands.push_back(command_generator.generateCreateAccount(
-            "admin", "test", keypair.pubkey));
-        manager = KeysManagerImpl("test@test");
+            "admin", "nbc", keypair.pubkey));
+
+        manager = KeysManagerImpl("test@nbc");
         manager.createKeys();
         keypair = *std::unique_ptr<iroha::keypair_t>(
             makeOldModel(*manager.loadKeys()));
         tx.commands.push_back(command_generator.generateCreateAccount(
-            "test", "test", keypair.pubkey));
+            "test", "nbc", keypair.pubkey));
 
         tx.commands.push_back(
-            std::make_shared<AppendRole>("admin@test", "admin"));
+            std::make_shared<AppendRole>("admin@nbc", "admin"));
         tx.commands.push_back(
-            std::make_shared<AppendRole>("admin@test", "money_creator"));
+            std::make_shared<AppendRole>("admin@nbc", "money_creator"));
+
         return tx;
       }
 

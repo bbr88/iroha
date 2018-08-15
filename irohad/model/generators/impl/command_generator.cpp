@@ -75,7 +75,7 @@ namespace iroha {
       std::shared_ptr<Command> CommandGenerator::generateCreateAdminRole(
           std::string role_name) {
         std::set<std::string> perms = {
-            can_create_domain, can_create_account, can_add_peer};
+            can_create_domain, can_create_account, can_add_peer, can_append_role, can_detach_role};
         perms.insert(edit_self_group.begin(), edit_self_group.end());
         perms.insert(read_all_group.begin(), read_all_group.end());
         return std::make_shared<CreateRole>(role_name, perms);
